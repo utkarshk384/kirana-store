@@ -3,9 +3,7 @@ package com.app.kiranastore.model;
 import com.app.kiranastore.enums.TransactionType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
@@ -15,6 +13,8 @@ import java.time.LocalDateTime;
 @Table(name="transactions")
 @Getter @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Transaction {
     @Id
     @GeneratedValue

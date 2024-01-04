@@ -2,8 +2,7 @@ package com.app.kiranastore.model;
 
 import jakarta.persistence.*;
 import jdk.jfr.Unsigned;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,6 +11,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Store {
     @Id
     @GeneratedValue
