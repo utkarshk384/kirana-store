@@ -1,6 +1,7 @@
 package com.app.kiranastore.service;
 
 import com.app.kiranastore.enums.TransactionType;
+import com.app.kiranastore.exception.ConflictException;
 import com.app.kiranastore.exception.NotFoundException;
 import com.app.kiranastore.model.Store;
 import com.app.kiranastore.model.Transaction;
@@ -32,6 +33,9 @@ public class TransactionService {
         Store store = storeRepo.findById(transaction.getStore().getId()).orElseThrow(() -> new NotFoundException("Store not found!"));
 
         BigDecimal finalBalance = this.updateBalance(transaction.getTransactionType(), store.getBalance(), transaction.getAmount());
+
+        if(transaction.getTransactionType() == TransactionType.DEBIT && finalBalance.compareTo(BigDecimal.valueOf(0)) == -1)
+            throw new ConflictException("Not enough money to deduct");
         store.setBalance(finalBalance);
 
         // Update store

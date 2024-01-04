@@ -50,6 +50,7 @@ public class TransactionController {
      * @throws com.app.kiranastore.exception.InternalServerException
      * @throws com.app.kiranastore.exception.BadRequestExcepetion
      * @throws com.app.kiranastore.exception.NotFoundException
+     * @throws com.app.kiranastore.exception.ConflictException
      *
      * @return ResponseEntity<Map<String, Object>>
      * */
