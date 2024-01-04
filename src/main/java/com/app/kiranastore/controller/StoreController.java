@@ -22,6 +22,18 @@ public class StoreController {
     @Autowired
     private FXRate currencyConverter;
 
+    /**
+     * @apiNote Will create a store based on the currency that is set by the user
+     *
+     * @param store - Request body
+     * @param currency - Enum ("INR" | "USD")
+     *
+     * @throws com.app.kiranastore.exception.InternalServerException
+     * @throws com.app.kiranastore.exception.BadRequestExcepetion
+     * @throws com.app.kiranastore.exception.NotFoundException
+     *
+     * @return ResponseEntity<Map<String, Object>>
+     * */
     @PostMapping("/stores/create")
     ResponseEntity<Object> newStore(@RequestBody Store store, @RequestParam String currency){
 
@@ -36,6 +48,12 @@ public class StoreController {
         return Response.generateResponse("Successfully added store.", HttpStatus.CREATED, createdStore);
     }
 
+
+    /**
+     * @apiNote Will return a list of stores or an empty list.
+     **
+     * @return ResponseEntity<Map<String, Object>>
+     * */
     @GetMapping("/stores/list")
     ResponseEntity<Object> listStore(){
         List<Store> stores =  storeService.listAll();
@@ -43,6 +61,16 @@ public class StoreController {
         return Response.generateResponse("Successfully listed stores.", HttpStatus.OK, stores);
     }
 
+
+    /**
+     * @apiNote Will return the store or throw an exception
+     *
+     * @param id - The ID of the store.
+     *
+     * @throws com.app.kiranastore.exception.NotFoundException
+     *
+     * @return ResponseEntity<Map<String, Object>>
+     * */
     @GetMapping("/stores/{id}")
     ResponseEntity<Object> getOne(@PathVariable Long id){
 
@@ -51,6 +79,19 @@ public class StoreController {
         return Response.generateResponse("Successfully fetched Store.", HttpStatus.OK, store);
     }
 
+
+    /**
+     * @apiNote Fetches the daily transactions of a store
+     *
+     * @param id - The ID of the store.
+     * @param currency - Enum ("INR" | "USD")
+     *
+     * @throws com.app.kiranastore.exception.InternalServerException
+     * @throws com.app.kiranastore.exception.BadRequestExcepetion
+     * @throws com.app.kiranastore.exception.NotFoundException
+     *
+     * @return ResponseEntity<Map<String, Object>>
+     * */
     @GetMapping("/report/{id}")
     ResponseEntity<Object> getDailyTransactions(@PathVariable Long id, @RequestParam(defaultValue = "INR", required = false) String currency){
         // Return amount in desired currency

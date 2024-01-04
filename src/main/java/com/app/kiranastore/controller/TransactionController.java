@@ -25,6 +25,13 @@ public class TransactionController {
     @Autowired
     private TransactionMapper mapper;
 
+    /**
+     * @apiNote Will get all the transactions of a store
+     *
+     * @param storeId - The ID of the store
+     *
+     * @return ResponseEntity<Map<String, Object>>
+     * */
     @GetMapping("/transactions/store/{storeId}")
     public ResponseEntity<Object> getAllTransaction(@PathVariable Long storeId){
 
@@ -33,6 +40,19 @@ public class TransactionController {
         return Response.generateResponse("Successfully returned all transactions with storeId " + storeId, HttpStatus.OK, transactions);
     }
 
+
+    /**
+     * @apiNote Will create a transaction.
+     *
+     * @param body - The transaction request body
+     * @param currency - Enum ("INR" | "USD")
+     *
+     * @throws com.app.kiranastore.exception.InternalServerException
+     * @throws com.app.kiranastore.exception.BadRequestExcepetion
+     * @throws com.app.kiranastore.exception.NotFoundException
+     *
+     * @return ResponseEntity<Map<String, Object>>
+     * */
     @PostMapping("/transactions/create")
     ResponseEntity<Object> addTransaction(@RequestBody TransactionDto body, @RequestParam String currency) {
         Transaction transaction = mapper.DTOtoEntity(body);
